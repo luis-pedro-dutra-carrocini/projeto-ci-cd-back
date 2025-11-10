@@ -1,0 +1,43 @@
+name: Deploy Automático Render
+
+on:
+  push:
+    tags:
+      - "v*.*.*" # executa apenas quando uma nova versão semântica for criada
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        run: npm install
+
+      # Opcional: rodar lint/testes
+      - name: Lint (opcional)
+        run: npm run lint
+
+      - name: Testes (opcional)
+        run: npm test
+
+      - name: Definir versão a partir da tag
+        id: ver
+        run: |
+          TAG_REF="${GITHUB_REF##*/}"
+          echo "tag=${TAG_REF}" >> $GITHUB_OUTPUT
+          echo "APP_VERSION=${TAG_REF#v}" >> $GITHUB_OUTPUT
+
+      - name: Deploy no Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${SERVICE_ID}/deploys"                 -H "Accept: application/json"                 -H "Authorization: Bearer ${RENDER_API_KEY}"                 -H "Content-Type: application/json"                 -d "{"clearCache": false, "envVars": [{"key":"APP_VERSION","value":"${{ steps.ver.outputs.APP_VERSION }}"}] }"
