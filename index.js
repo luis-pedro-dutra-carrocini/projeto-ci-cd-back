@@ -3,8 +3,8 @@ import cors from 'cors';
 
 const app = express();
 
-// Configuração de CORS - defina o domínio do front (ex.: https://seu-front.vercel.app)
-const allowedOrigin = process.env.ALLOWED_ORIGIN || '*';
+// Configuração de CORS
+const allowedOrigin = 'https://projeto-ci-cd-front-navy.vercel.app/';
 app.use(cors({ origin: allowedOrigin }));
 
 app.get('/', (req, res) => {
