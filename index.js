@@ -4,7 +4,7 @@ import cors from 'cors';
 const app = express();
 
 // Configuração de CORS
-const allowedOrigin = 'https://projeto-ci-cd-front-navy.vercel.app/';
+const allowedOrigin = '*';
 app.use(cors({ origin: allowedOrigin }));
 
 app.get('/', (req, res) => {
