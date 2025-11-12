@@ -5,7 +5,7 @@ const app = express();
 
 // Configuração de CORS
 const corsOptions = {
-  origin: "https://projeto-ci-cd-front-navy.vercel.app/",
+  origin: "*",
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization",
 };
