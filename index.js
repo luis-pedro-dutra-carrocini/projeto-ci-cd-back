@@ -4,8 +4,13 @@ import cors from 'cors';
 const app = express();
 
 // Configuração de CORS
-const allowedOrigin = '*';
-app.use(cors({ origin: allowedOrigin }));
+const corsOptions = {
+  origin: "https://projeto-ci-cd-front-navy.vercel.app/",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+};
+
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
   res.json({ mensagem: 'API online e integrada com CI/CD!' });
@@ -13,10 +18,10 @@ app.get('/', (req, res) => {
 
 // Endpoint opcional de saúde
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: process.env.APP_VERSION || 'dev' });
+  res.json({ status: 'ok', version: 'dev' });
 });
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
