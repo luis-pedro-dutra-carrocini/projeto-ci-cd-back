@@ -13,7 +13,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
-  res.json({ mensagem: 'API rodando e integrada com CI/CD!' });
+  res.json({ mensagem: 'API rodando e integrada com CI/CD na internet do claudiãooooooooooooooooooooooooooooooooo!' });
 });
 
 // Endpoint opcional de saúde
